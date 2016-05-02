@@ -62,6 +62,7 @@ typedef enum RS_enum {
 volatile unsigned int val_1=0;
 volatile unsigned int val_2=0;
 volatile unsigned int val_3=0;
+char* a;
 
 volatile stateType state = stop;
 
@@ -69,6 +70,9 @@ int main(void)
 {   
     SYSTEMConfigPerformance(10000000);
     enableInterrupts();
+    
+    TRISDbits.TRISD0 = 0;
+    LATDbits.LATD0 = 0;
   
     //PINTypeSW=1;
     PINTypeIN1=OUTPUT;
@@ -85,8 +89,6 @@ int main(void)
     initLCD();
     initADC_1();
     initPWM();
-    
-    writeCMD(CLR);
     
     PINTypeSW = INPUT;
     CNPUDbits.CNPUD6 = 1;
@@ -129,36 +131,62 @@ int main(void)
             case go:
                 IR = IR_Output();
                 if(IR == 2) {
-                    accelerator(100,100);
+                    q = go;
+                    accelerator(70,70);
                 }
                 else if( IR == 1 || IR == 3) {
                     q = left;
-                    accelerator(-60,100);
+                    accelerator(-10,50);
+                    delayMs(10);
+                    accelerator(70,70);
+                    delayMs(30);
                 }
                 else if( IR == 4 || IR == 6) {
                     q = right;
-                    accelerator(100,-30);
+                    accelerator(50,-10);
+                    delayMs(10);
+                    accelerator(100,100);
+                    delayMs(30);
                 }
                 else if( IR == 7) {
                     accelerator(100,100);
-                    if(flag<1) {
+
+                    if(flag < 2 && flag > 0) {
                         delayMs(400);
+                        accelerator(-100,100);
+                        delayMs(450);
                         while(IR != 2) {
-                            accelerator(-100,100);
+                            
                             IR = IR_Output();
                         }
                         accelerator(100,100);
                     }
-                    flag++;  
+                    else if(flag < 4 || flag > 6) {
+                        delayMs(400);
+                        accelerator(100,-100);
+                        delayMs(450);
+                        while(IR != 2) {
+                            
+                            IR = IR_Output();
+                        }
+                        accelerator(100,100);
+                    }
+                    else {
+                        q = go; 
+                    }
+                    flag++;
                 }
                
                 else if(IR == 0) {
                     switch(q) {
                         case right:
-                            accelerator(100,-30);
+                            accelerator(60,-5);
                             break;
                         case left:
-                            accelerator(-30,100);
+                            accelerator(-5,60);
+                            break;
+                        case go:
+                            accelerator(50,50);
                             break;
                         default:
                             q = go;
@@ -170,6 +198,7 @@ int main(void)
                     {
                         state=waitf;
                         flag = 0;
+                        q = go;
                     }
                 break;
         }

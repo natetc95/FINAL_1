@@ -43,9 +43,9 @@ int IR_Output(void) {
 
 	if(IFS0bits.AD1IF ==1) {
            
-            val_1 = ADC1BUF0 + 50;
-            val_2 = ADC1BUF2 - 50;
-            val_3 = ADC1BUF4;
+            val_1 = ADC1BUF0 + 210;
+            val_2 = ADC1BUF2;
+            val_3 = ADC1BUF4+160;
 			
 			if(val_1 > 675) {
 				output |= 1;
@@ -60,5 +60,4 @@ int IR_Output(void) {
 			return output;
 			
     }
-
 }
