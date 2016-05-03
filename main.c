@@ -104,11 +104,13 @@ int main(void)
     
     INPUT1=SEND;
     INPUT3=SEND;
-        
+    
+    
     while(1){
+        
         switch(state) {
             case stop:
-                accelerator(0,0);
+                 accelerator(0,0);
                 OC_off();
                 if(PORTDbits.RD6==0) // Button released
                     {
@@ -131,62 +133,43 @@ int main(void)
             case go:
                 IR = IR_Output();
                 if(IR == 2) {
-                    q = go;
-                    accelerator(70,70);
+                    accelerator(100,100);
                 }
-                else if( IR == 1 || IR == 3) {
+                else if( IR == 1) {
                     q = left;
-                    accelerator(-10,50);
-                    delayMs(10);
-                    accelerator(70,70);
-                    delayMs(30);
-                }
-                else if( IR == 4 || IR == 6) {
-                    q = right;
-                    accelerator(50,-10);
+                    accelerator(0,100);
                     delayMs(10);
                     accelerator(100,100);
-                    delayMs(30);
+                    delayMs(5);
                 }
-//                else if( IR == 7) {
-//                    accelerator(100,100);
-//
-//                    if(flag < 2 && flag > 0) {
-//                        delayMs(400);
-//                        accelerator(-100,100);
-//                        delayMs(450);
-//                        while(IR != 2) {
-//                            
-//                            IR = IR_Output();
-//                        }
-//                        accelerator(100,100);
-//                    }
-//                    else if(flag < 4 || flag > 6) {
-//                        delayMs(400);
-//                        accelerator(100,-100);
-//                        delayMs(450);
-//                        while(IR != 2) {
-//                            
-//                            IR = IR_Output();
-//                        }
-//                        accelerator(100,100);
-//                    }
-//                    else {
-//                        q = go; 
-//                    }
-//                    flag++;
-//                }
-               
+                else if(IR == 3){
+                    //delayMs(50);
+                    q = left;
+                    accelerator(0,100);
+                }
+                else if( IR == 4) {
+                    q = right;
+                    accelerator(100,0);
+                    delayMs(10);
+                    accelerator(100,100);
+                    delayMs(5);
+                    
+                }
+                else if(IR == 6){
+                    //delayMs(50);
+                    q = right;
+                    accelerator(100,0);
+                }
                 else if(IR == 0) {
                     switch(q) {
                         case right:
-                            accelerator(60,-5);
+                            accelerator(100,0);
                             break;
                         case left:
-                            accelerator(-5,60);
+                            accelerator(0,100);
                             break;
                         case go:
-                            accelerator(50,50);
+                            accelerator(100,100);
                             break;
                         default:
                             q = go;
@@ -194,6 +177,20 @@ int main(void)
                             break;
                     }
                 }
+//                else if(IR == 7) {
+//                    switch(q) {
+//                        case right:
+//                            accelerator(60,-20);
+//                            break;
+//                        case left:
+//                            accelerator(-20,60);
+//                            break;
+//                        default:
+//                            q = go;
+//                            accelerator(50,50);
+//                            break;
+//                    }
+//                }
                 if(PORTDbits.RD6==0) // Button released
                     {
                         state=waitf;

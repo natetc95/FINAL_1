@@ -88,7 +88,7 @@ void OC_on() {
 
 void accelerator(int L, int R) {
         
-    int perc = 1;
+    double perc = 0.3;
 //    double Lp = L/100;
 //    double Rp = R/100;
     
