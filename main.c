@@ -148,34 +148,34 @@ int main(void)
                     accelerator(100,100);
                     delayMs(30);
                 }
-                else if( IR == 7) {
-                    accelerator(100,100);
-
-                    if(flag < 2 && flag > 0) {
-                        delayMs(400);
-                        accelerator(-100,100);
-                        delayMs(450);
-                        while(IR != 2) {
-                            
-                            IR = IR_Output();
-                        }
-                        accelerator(100,100);
-                    }
-                    else if(flag < 4 || flag > 6) {
-                        delayMs(400);
-                        accelerator(100,-100);
-                        delayMs(450);
-                        while(IR != 2) {
-                            
-                            IR = IR_Output();
-                        }
-                        accelerator(100,100);
-                    }
-                    else {
-                        q = go; 
-                    }
-                    flag++;
-                }
+//                else if( IR == 7) {
+//                    accelerator(100,100);
+//
+//                    if(flag < 2 && flag > 0) {
+//                        delayMs(400);
+//                        accelerator(-100,100);
+//                        delayMs(450);
+//                        while(IR != 2) {
+//                            
+//                            IR = IR_Output();
+//                        }
+//                        accelerator(100,100);
+//                    }
+//                    else if(flag < 4 || flag > 6) {
+//                        delayMs(400);
+//                        accelerator(100,-100);
+//                        delayMs(450);
+//                        while(IR != 2) {
+//                            
+//                            IR = IR_Output();
+//                        }
+//                        accelerator(100,100);
+//                    }
+//                    else {
+//                        q = go; 
+//                    }
+//                    flag++;
+//                }
                
                 else if(IR == 0) {
                     switch(q) {

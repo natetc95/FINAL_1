@@ -13,7 +13,6 @@
 //#include <proc/p32x470f5121.h>
 #include "pwm.h"
 
-
 void initPWM(){
     RPD1Rbits.RPD1R = 0b1011; // map OC2 to RD1, input 1
     RPD9Rbits.RPD9R = 0;    //input 2
@@ -89,6 +88,10 @@ void OC_on() {
 
 void accelerator(int L, int R) {
         
+    int perc = 1;
+//    double Lp = L/100;
+//    double Rp = R/100;
+    
     OC5RS = 0;
 	OC2RS = 0;
 	OC4RS = 0;
@@ -134,8 +137,8 @@ void accelerator(int L, int R) {
 	
 	if (L < 0) {
 	
-		OC4RS = 0.3*(-1 * L)+70;
-		
+		OC4RS = perc*(-1 * L)+70;
+//		OC4RS = -1*Lp*1023;
 	}
 	else {
 		
@@ -143,12 +146,14 @@ void accelerator(int L, int R) {
 			OC4RS = 0;
 		}
 		else {
-			OC4RS =  0.3*L + 70;
+          OC4RS =  perc*L + 70;
+//          OC4RS =  Lp*1023;
 		}
 	}
 	if (R < 0) {
 		
-		OC5RS = 0.3*(-1 * R)+70;
+		OC5RS = perc*(-1 * R)+70;
+//        OC5RS = -1*Rp*1023;
 		
 	}
 	else {
@@ -157,7 +162,9 @@ void accelerator(int L, int R) {
             OC2RS = 0;
 		}
 		else {
-			OC2RS = 0.3*R+70;
+			OC2RS = perc*R +70;
+//            OC2RS = Rp*1023;
+            
 		}
 	
 	}
